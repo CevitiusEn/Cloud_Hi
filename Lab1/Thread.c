@@ -45,9 +45,7 @@ void* Deal()
     {
 	printf("%s\n",puzzle);
     }
-    
-    usleep(rand()%100);
-    return (void*)i;
+    return (void*)(long)i;
 }
 
 int main()
@@ -65,28 +63,24 @@ int main()
     beginTime=clock();
     p=&gloCoun;
     init(p,filename);
-
-    for(int i=0;i<n;i++)
-    {
-	if(pthread_create(&thread[i], NULL, Deal, NULL)!=0)
-	{
-	    printf("线程%d创建失败\n",i);
-	}
+    //judge if thread is successfully created
+    if(ret_thrd1!=0){
+	   printf("线程1创建失败\n");
     }
-
-    for(int i=0;i<n;i++)
-    {
-	if(pthread_join(thread[i], (void**)&retval[i])!=0)
-	{
-	    printf("cannot join with thread%d\n",i);
-	}
+    else{
+	   printf("线程1创建成功\n");
     }
-    endTime=clock();
     
-    printf("count is %d\n",p->value);
-    for(int i=0;i<n;i++)
-    {
-	printf("Thread%d return : %d\n",i,retval[i]);
+    if(ret_thrd2!=0){
+	   printf("线程2创建失败\n");
+    }
+    else{
+	   printf("线程2创建成功\n");
+    }
+
+    pJoin_thrd1=pthread_join(thread1, (void**)&retval1);
+    if (pJoin_thrd1 != 0) {
+        printf("cannot join with thread1\n");
     }
     printf("Process time:%d\n",endTime-beginTime);
     return 0;

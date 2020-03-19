@@ -1,7 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
 #include <strings.h>
-
 #include "sudoku.h"
 
 #include <algorithm>
@@ -74,14 +73,14 @@ static void print_neighbors(const bool adjacent[ROW][COL], int row, int col, int
     }
   }
 }
-/*
-bool solved()
+
+bool solved(Solve solve)
 {
   for (int row = 0; row < ROW; ++row) {
     // check row
     int occurs[10] = { 0 };
     for (int col = 0; col < COL; ++col) {
-      int val = chess[row][col];
+      int val = solve.chess[row][col];
       assert(1 <= val && val <= NUM);
       ++occurs[val];
     }
@@ -93,7 +92,7 @@ bool solved()
   for (int col = 0; col < COL; ++col) {
     int occurs[10] = { 0 };
     for (int row = 0; row < ROW; ++row) {
-      int val = chess[row][col];
+      int val = solve.chess[row][col];
       // assert(1 <= val && val <= NUM);
       ++occurs[val];
     }
@@ -105,19 +104,19 @@ bool solved()
   for (int row = 0; row < ROW; row += 3) {
     for (int col = 0; col < COL; col += 3) {
       int occurs[10] = { 0 };
-      ++occurs[chess[row  ][col]];
-      ++occurs[chess[row  ][col+1]];
-      ++occurs[chess[row  ][col+2]];
-      ++occurs[chess[row+1][col]];
-      ++occurs[chess[row+1][col+1]];
-      ++occurs[chess[row+1][col+2]];
-      ++occurs[chess[row+2][col]];
-      ++occurs[chess[row+2][col+1]];
-      ++occurs[chess[row+2][col+2]];
+      ++occurs[solve.chess[row  ][col]];
+      ++occurs[solve.chess[row  ][col+1]];
+      ++occurs[solve.chess[row  ][col+2]];
+      ++occurs[solve.chess[row+1][col]];
+      ++occurs[solve.chess[row+1][col+1]];
+      ++occurs[solve.chess[row+1][col+2]];
+      ++occurs[solve.chess[row+2][col]];
+      ++occurs[solve.chess[row+2][col+1]];
+      ++occurs[solve.chess[row+2][col+2]];
 
       if (std::count(occurs, occurs+10, 1) != NUM)
         return false;
     }
   }
   return true;
-}*/
+}

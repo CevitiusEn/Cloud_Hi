@@ -1,9 +1,15 @@
 #include <assert.h>
 #include <stdio.h>
-
 #include <algorithm>
+#include <iostream>
+using namespace std;
 
-#include "sudoku.h"
+const bool DEBUG_MODE = false;
+enum { ROW=9, COL=9, N = 81, NEIGHBOR = 20 };
+const int NUM = 9;
+
+extern int neighbors[N][NEIGHBOR];
+
 class Solve{
 public:
     int board[N];
@@ -44,9 +50,10 @@ bool available(int guess, int cell)
   return true;
 }
 
-bool solve_sudoku_basic(int which_space)
+bool solve_sudoku_basic(int which_space,char* puzzle)
 {
   if (which_space >= nspaces) {
+    cout<<puzzle<<endl;
     return true;
   }
 
@@ -58,9 +65,9 @@ bool solve_sudoku_basic(int which_space)
       // hold
       assert(board[cell] == 0);
       board[cell] = guess;
-
+      puzzle[cell]=guess+'0';
       // try
-      if (solve_sudoku_basic(which_space+1)) {
+      if (solve_sudoku_basic(which_space+1,puzzle)) {
         return true;
       }
 

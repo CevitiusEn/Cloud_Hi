@@ -5,11 +5,11 @@
 using namespace std;
 
 const bool DEBUG_MODE = false;
+const bool output = false;
 enum { ROW=9, COL=9, N = 81, NEIGHBOR = 20 };
 const int NUM = 9;
 
 extern int neighbors[N][NEIGHBOR];
-
 class Solve{
 public:
     int board[N];
@@ -53,7 +53,6 @@ bool available(int guess, int cell)
 bool solve_sudoku_basic(int which_space,char* puzzle)
 {
   if (which_space >= nspaces) {
-    cout<<puzzle<<endl;
     return true;
   }
 

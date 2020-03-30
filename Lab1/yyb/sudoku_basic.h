@@ -1,11 +1,13 @@
+#include <thread>
 #include <assert.h>
 #include <stdio.h>
 #include <algorithm>
 #include <iostream>
+#include <semaphore.h>
 using namespace std;
 
 const bool DEBUG_MODE = false;
-enum { ROW=9, COL=9, N = 81, NEIGHBOR = 20 };
+enum { ROW=9, COL=9, N = 81, NEIGHBOR = 20 ,MAX_INT=0x7fffffff};
 const int NUM = 9;
 
 extern int neighbors[N][NEIGHBOR];
@@ -17,11 +19,23 @@ public:
     int nspaces;
     int (*chess)[COL];
     int count;
-    int puzzle[N];
+    sem_t sem;
+    char puzzle[128];
+    bool finish=false;
+
 Solve()
 {
     chess = (int (*)[COL])board;
+    sem_init(&this->sem,0,0);
 }
+
+int getNum(){return count;}
+
+bool isFinish(){return finish;}
+
+sem_t* get_Sem(){return &sem;}
+
+int* getData(){return board;}
 
 void find_spaces()
 {
@@ -80,7 +94,12 @@ bool solve_sudoku_basic(int which_space,char* puzzle)
   }
   return false;
 }
+  std::thread basicThread(int which_space,char* puzzle) 
+  {
+      return std::thread(&Solve::solve_sudoku_basic, this, which_space, puzzle);
+  }
 };
+
 
 
 

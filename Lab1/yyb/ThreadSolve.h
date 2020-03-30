@@ -1,31 +1,34 @@
-
+#ifndef ThreadSolve_H
+#define ThreadSolve_H
 #include <iostream>
 #include <queue>
+#include "sudoku.h"
+using namespace std;
 struct ThreadSolve
 {
     private:
-        std::queue<solve*>* puzzle_qe=nullptr;
-        std::queue<solve*>* print_qe=nullptr;
+        std::queue<Solve*>* puzzle_qe=nullptr;
+        std::queue<Solve*>* print_qe=nullptr;
         bool work_flag=true;
 
 
     public:
         ThreadSolve()
         {
-            puzzle_qe = new std::queue<solve*>;
-            print_qe=new std::queue<solve*>;
+            puzzle_qe = new std::queue<Solve*>;
+            print_qe=new std::queue<Solve*>;
         };
 
         void start();
 
-        void append(solve*);
+        void append(Solve*);
 
-        void addThread(solve*);
+        void addThread(Solve*);
 
         void stop();
 
 
-        std::queue<solve*>* get_queue() {return puzzle_qe;};
+        std::queue<Solve*>* get_queue() {return puzzle_qe;};
 
 
        ~ThreadSolve()
@@ -34,3 +37,5 @@ struct ThreadSolve
            delete print_qe;
        }
 };
+
+#endif

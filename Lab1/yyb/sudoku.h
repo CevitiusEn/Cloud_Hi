@@ -1,12 +1,16 @@
 #ifndef SUDOKU_H
 #define SUDOKU_H
 #include "sudoku_basic.h"
-
+#include <mutex>
+#include <semaphore.h>
 /*extern int board[N];
 extern int spaces[N];
 extern int nspaces;
 extern int (*chess)[COL];*/
-
+extern std::mutex mtx;
+extern sem_t sem;
+extern int64_t start,end;
+int64_t now();
 void init_neighbors();
 void input(const char in[N]);
 void init_cache();

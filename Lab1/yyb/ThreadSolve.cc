@@ -1,8 +1,45 @@
 #include <thread>
 #include <mutex>
 #include "ThreadSolve.h"
-#include "sudoku.h"
+#include<iostream>
+#include <semaphore.h>
+using namespace std;
+std::mutex mtx;
+sem_t sem;
+int64_t start;
+void out_data(int* data)
+{
+    for(int i=0;i<81;i++)
+        std::cout<<*(data+i);
+    std::cout<<std::endl;
+}
 
+void outstd(std::queue<Solve*>* print_queue)
+{
+    Solve* tmp;
+    while(1)
+    {
+        if(!print_queue->empty())
+        {
+            tmp=print_queue->front();
+            if(tmp && tmp->isFinish())
+            {
+                if(tmp->getNum()==MAX_INT) 
+                { 
+                    int64_t end = now();
+                    double sec = (end-start)/1000000.0;
+                    return;
+                } 
+                 std::cout<<tmp->getNum()<<":"<<std::endl;
+                out_data(tmp->getData());
+                delete tmp;
+                print_queue->pop(); 
+            }
+            else sem_wait(tmp->get_Sem());
+        }
+        
+    }
+}
 void ThreadSolve::start()
 {
      std::thread t(outstd,print_qe);  //开启输出线程
@@ -25,15 +62,15 @@ void ThreadSolve::start()
     }
 }
 
-void ThreadSolve::append(solve* sol)   //向工作队列添加一个Data对象指针
+void ThreadSolve::append(Solve* sol)   //向工作队列添加一个Data对象指针
 {
         puzzle_qe->push(sol);
 }
 
-void ThreadSolve::addThread(solve* sol)    //添加一个 解数独 的线程
+void ThreadSolve::addThread(Solve* sol)    //添加一个 解数独 的线程
 {
-    std::thread t1(sol.solve_sudoku_basic,0,sol.puzzle);
-    t1.detach();;
+    std::thread t1=sol->basicThread(0,sol->puzzle);
+    t1.detach();
 }
 
 void ThreadSolve::stop() //停止，将work_flag标置为0

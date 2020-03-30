@@ -7,7 +7,8 @@
 #include <unistd.h>
 #include "sudoku.h"
 
-
+// std::mutex mtx;
+// sem_t sem;
 typedef struct Counter_t
 {
     int value;

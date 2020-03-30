@@ -7,7 +7,10 @@
 #include <unistd.h>
 #include "sudoku.h"
 #include "ThreadSolve.h"
-
+#include <cstring>
+#include <thread>
+#include <mutex>
+#include <semaphore.h>
 
 typedef struct Counter_t
 {
@@ -42,9 +45,9 @@ bool readPuzzle(Counter_t *c,ThreadSolve* TSolve)
         // pthread_mutex_unlock(&c->lock);
         Solve* solve=new Solve();
         solve->count=num;
-        solve->puzzle=puzzle;
-        solve.input(puzzle);
-        TSolve.append(solve);
+        strcpy(solve->puzzle,puzzle);
+        solve->input(puzzle);
+        TSolve->append(solve);
         num++;
     }
 }
@@ -82,6 +85,7 @@ bool readPuzzle(Counter_t *c,ThreadSolve* TSolve)
 
 int main()
 {
+
     init_neighbors();
     printf("input thread num: \n");
     int n;
@@ -93,14 +97,15 @@ int main()
     printf("input test file:");
     cin>>filename;
 
-    int64_t start = now();
     p=&gloCoun;
     init(p,filename);
     
-    ThreadSolve* Tsolve=new ThreadSolve();
+    ThreadSolve* TSolve=new ThreadSolve();
+    
+    start = now();
     std::thread load(readPuzzle,p,TSolve);
     load.detach();
-    Tsolve->start;
+    TSolve->start();
     pthread_exit(NULL); 
     // for(int i=0;i<n;i++)
     // {

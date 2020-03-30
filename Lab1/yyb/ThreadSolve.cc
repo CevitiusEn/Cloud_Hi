@@ -1,0 +1,43 @@
+#include <thread>
+#include <mutex>
+#include "ThreadSolve.h"
+#include "sudoku.h"
+
+void ThreadSolve::start()
+{
+     std::thread t(outstd,print_qe);  //开启输出线程
+     t.detach();    //线程启动并且不堵塞
+    while(work_flag)    //work_flag工作状态
+    {
+        if(!puzzle_qe->empty())    //存放 数独集 的工作队列不为空
+        {
+            sem_wait(&sem);
+            mtx.lock(); //获得锁
+
+                 addThread(puzzle_qe->front());  //处理队列最开始Data对象指针
+                 print_qe->push(puzzle_qe->front());   //将队列最开始Data对象指针加入输出队列中
+
+                 if(puzzle_qe->front()->getNum()==MAX_INT){mtx.unlock(); return;}
+                 puzzle_qe->pop();//pop队列最开始Data对象指针
+
+            mtx.unlock();
+        }
+    }
+}
+
+void ThreadSolve::append(solve* sol)   //向工作队列添加一个Data对象指针
+{
+        puzzle_qe->push(sol);
+}
+
+void ThreadSolve::addThread(solve* sol)    //添加一个 解数独 的线程
+{
+    std::thread t1(sol.solve_sudoku_basic,0,sol.puzzle);
+    t1.detach();;
+}
+
+void ThreadSolve::stop() //停止，将work_flag标置为0
+{
+    work_flag=false;
+}
+

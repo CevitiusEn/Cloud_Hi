@@ -3,7 +3,6 @@
 #include "ThreadSolve.h"
 #include<iostream>
 #include <semaphore.h>
-#include<iostream>
 using namespace std;
 std::mutex mtx;
 sem_t sem;
@@ -73,7 +72,7 @@ void ThreadSolve::append(Solve* sol)   //向工作队列添加一个Data对象�
 
 void ThreadSolve::addThread(Solve* sol)    //添加一个 解数独 的线程
 {
-    std::thread t1=sol->basicThread(0,sol->puzzle);
+    std::thread t1=sol->Thread_min_arity_cache(0);
     t1.detach();
 }
 

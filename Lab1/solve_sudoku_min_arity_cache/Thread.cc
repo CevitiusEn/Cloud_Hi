@@ -48,7 +48,6 @@ bool readPuzzle(Counter_t *c,ThreadSolve* TSolve)
         cout<<"loading.....num: "<<num;
         strcpy(solve->puzzle,puzzle);
         cout<<"    puzzle:  "<<solve->puzzle<<endl;
-        solve->input(puzzle);
         TSolve->append(solve);
         num++;
     }

@@ -44,6 +44,7 @@ bool readPuzzle(Counter_t *c)
 	strcpy(puzzle,*(c->sudoku.begin()));
 	c->sudoku.pop_front();
 	pthread_mutex_unlock(&c->lock);
+	usleep(10);
 
 	solve.input(puzzle);
 	if(solve.solve_sudoku_basic(0,puzzle))
@@ -52,6 +53,7 @@ bool readPuzzle(Counter_t *c)
 	    pthread_mutex_lock(&c->lock);
 	    strcpy(answer[position],puzzle);
 	    pthread_mutex_unlock(&c->lock);
+	    usleep(10);
 	    if(output) cout<<"success"<<endl;
 	}
 	else

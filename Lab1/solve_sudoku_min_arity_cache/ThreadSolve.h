@@ -8,7 +8,6 @@ struct ThreadSolve
 {
     private:
         std::queue<Solve*>* puzzle_qe=nullptr;
-        std::queue<Solve*>* print_qe=nullptr;
         bool work_flag=true;
 
 
@@ -34,7 +33,6 @@ struct ThreadSolve
        ~ThreadSolve()
        {
            delete puzzle_qe;
-           delete print_qe;
        }
 };
 

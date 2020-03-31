@@ -6,7 +6,7 @@ all: sudoku_solve
 sudoku_solve: Thread.cc neighbor.cc ThreadSolve.cc
 	g++ -O2 -o $@ $^ -std=c++11 -pthread 
 
-# sudoku: Thread.o neighbor.o ThreadSolve.o
+# sudoku_solve: Thread.o neighbor.o ThreadSolve.o
 # 	g++ Thread.o neighbor.o ThreadSolve.o -std=c++11 -pthread
 # Thread.o:Thread.cc ThreadSolve.h 
 # 	g++ -c Thread.cc -std=c++11 -pthread

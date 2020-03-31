@@ -73,7 +73,7 @@ int main()
     TSolve->Wk_Thread_Begin();
     ending = now();
     double sec = (ending-start)/1000000.0;
-    cout<<"用时："<<sec<<endl;
+   // cout<<"用时："<<sec<<endl;
     pthread_exit(NULL); 
     return 0;
 }

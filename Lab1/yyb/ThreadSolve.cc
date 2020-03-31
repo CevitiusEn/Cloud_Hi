@@ -16,7 +16,6 @@ void ThreadSolve::Wk_Thread_Begin()
             // cout<<"正在处理队列："<<puzzle_qe->front()->count<<endl;
             mtx.lock(); 
                 addThread(puzzle_qe->front());
-                print_qe->push(puzzle_qe->front());
                // cout<<"队列头部正在处理的puzzle编号："<<puzzle_qe->front()->getNum()<<endl;
                 if(puzzle_qe->front()->getNum()==MAX_INT)
                 {   

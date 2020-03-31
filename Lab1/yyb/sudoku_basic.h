@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iostream>
 #include <semaphore.h>
+#include "sudoku.h"
 using namespace std;
 
 const bool DEBUG_MODE = false;
@@ -70,9 +71,17 @@ bool solve_sudoku_basic(int which_space,char* puzzle)
 {
   if (which_space >= nspaces) {
     cout<<puzzle<<endl;
+    if(solved(this)==false)
+    {
+        cout<<"解错误"<<endl;
+    }
+    else
+    {
+      cout<<"解正确"<<endl;
+    }
+    
     return true;
   }
-
   // find_min_arity(which_space);
   int cell = spaces[which_space];
 

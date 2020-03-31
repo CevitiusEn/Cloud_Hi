@@ -1,9 +1,9 @@
 CXXFLAGS+=-O2 -ggdb -DDEBUG
 CXXFLAGS+=-Wall -Wextra
 
-all: sudoku
+all: sudoku_solve
 
-sudoku: Thread.cc neighbor.cc ThreadSolve.cc
+sudoku_solve: Thread.cc neighbor.cc ThreadSolve.cc
 	g++ -O2 -o $@ $^ -std=c++11 -pthread 
 
 # sudoku: Thread.o neighbor.o ThreadSolve.o

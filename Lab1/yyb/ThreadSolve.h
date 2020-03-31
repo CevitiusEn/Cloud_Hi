@@ -9,8 +9,7 @@ struct ThreadSolve
     private:
         std::queue<Solve*>* puzzle_qe=nullptr;
         std::queue<Solve*>* print_qe=nullptr;
-        bool work_flag=true;
-
+        bool working=true;
 
     public:
         ThreadSolve()
@@ -19,17 +18,11 @@ struct ThreadSolve
             print_qe=new std::queue<Solve*>;
         };
 
-        void start();
+        void Wk_Thread_Begin();
 
-        void append(Solve*);
+        void add(Solve*);
 
         void addThread(Solve*);
-
-        void stop();
-
-
-        std::queue<Solve*>* get_queue() {return puzzle_qe;};
-
 
        ~ThreadSolve()
        {

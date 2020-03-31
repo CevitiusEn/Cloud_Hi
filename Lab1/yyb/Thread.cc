@@ -45,16 +45,16 @@ bool readPuzzle(Counter_t *c,ThreadSolve* TSolve)
         // pthread_mutex_unlock(&c->lock);
         Solve* solve=new Solve();
         solve->count=num;
-        cout<<"loading.....num: "<<num;
+       // cout<<"loading.....num: "<<num;
         strcpy(solve->puzzle,puzzle);
-        cout<<"    puzzle:  "<<solve->puzzle<<endl;
+        //cout<<"    puzzle:  "<<solve->puzzle<<endl;
         solve->input(puzzle);
-        TSolve->append(solve);
+        TSolve->add(solve);
         num++;
     }
     Solve* solveEnd=new Solve();
     solveEnd->count=MAX_INT;
-    TSolve->append(solveEnd);
+    TSolve->add(solveEnd);
 }
 
 int main()
@@ -70,7 +70,7 @@ int main()
     std::thread load(readPuzzle,p,TSolve);
     load.detach();
     start = now();
-    TSolve->start();
+    TSolve->Wk_Thread_Begin();
     ending = now();
     double sec = (ending-start)/1000000.0;
     cout<<"用时："<<sec<<endl;

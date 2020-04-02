@@ -8,7 +8,7 @@
 #include <list>
 #include "sudoku.h"
 
-char answer[10000][128];
+char answer[1000000][128];
 typedef struct Counter_t
 {
     int value,size;

@@ -8,7 +8,7 @@
 #include <list>
 #include "sudoku.h"
 
-char answer[1000][128];
+char answer[10000][128];
 typedef struct Counter_t
 {
     int value,size;
@@ -88,14 +88,12 @@ int main()
 {
     FILE* fp;
     init_neighbors();
-    printf("input thread num: \n");
-    int n;
-    cin>>n;
+    int n=sysconf(_SC_NPROCESSORS_CONF);
+
     pthread_t thread[n];
     int retval[n];
     
     char filename[30];
-    printf("input test file:");
     cin>>filename;
     fp=fopen(filename, "r");
 
@@ -114,7 +112,7 @@ int main()
     {
 	if(pthread_create(&thread[i], NULL, Deal,(void*)i)!=0)
 	{
-	    printf("线程%d创建失败\n",i);
+	    //printf("线程%d创建失败\n",i);
 	}
     }
 
@@ -122,17 +120,17 @@ int main()
     {
 	if(pthread_join(thread[i], (void**)&retval[i])!=0)
 	{
-	    printf("cannot join with thread%d\n",i);
+	    //printf("cannot join with thread%d\n",i);
 	}
     }
     int64_t end = now();
     double sec = (end-start)/1000000.0;
 
-    printf("count is %d\n",p->value);
-    for(int i=0;i<n;i++)
+    //printf("count is %d\n",p->value);
+    /*for(int i=0;i<n;i++)
     {
 	printf("Thread%d return : %d\n",i,retval[i]);
-    }
+    }*/
     
     for(int i=0;i<p->size;i++)
     {
@@ -144,6 +142,6 @@ int main()
 	*(p->sudoku.begin())=NULL;
 	p->sudoku.pop_front();
     }
-    cout<<"Process time:"<<sec<<endl;
+    //cout<<"Process time:"<<sec<<endl;
     return 0;
 }
